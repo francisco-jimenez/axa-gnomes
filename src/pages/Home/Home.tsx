@@ -1,14 +1,10 @@
 import React, { useEffect, useState, useContext } from "react"
 import { Button, Input, Pagination, Loader, Dropdown } from 'semantic-ui-react'
 import API from "../../services/API"
-import { AllGnomes } from "../../contexts/AllGnomesContext"
-import { useHistory, useLocation } from "react-router-dom"
-import { Gnome } from "../../models/Gnome"
-import { filterByName, filterByProfession, getProfessions, transformProfessionsIntoSelectOptions } from "../../utils"
+import { filterByAge, filterByHeight, filterByName, filterByProfession, filterByWeight, getProfessions, transformProfessionsIntoSelectOptions } from "../../utils"
 import GnomeCard from "../../components/GnomeCard"
 import Paginator from "../../components/Paginator"
-import { DisplayedGnomes } from "../../contexts/DisplayedGnomesContext"
-
+import InputRange from 'react-input-range';
 
 export const Home = () => {
 
@@ -21,6 +17,9 @@ export const Home = () => {
     const [displayedGnomes, setDisplayedGnomes] = useState([])
     const [filterredGnomes, setFilterredGnomes] = useState([])
     const [selectedProfession, setSelectedProfession] = useState('')
+    const [selectedAgeRange, setSelectedAgeRange] = useState({ min: 0, max: 100 } as any)
+    const [selectedHeightRange, setSelectedHeightRange] = useState({ min: 0, max: 100 } as any)
+    const [selectedWeightRange, setSelectedWeightRange] = useState({ min: 0, max: 100 } as any)
 
 
     useEffect(() => {
@@ -50,6 +49,9 @@ export const Home = () => {
         console.log('after name', gnomesToFilter)
         gnomesToFilter = filterByProfession(gnomesToFilter, selectedProfession)
         console.log('after profession', gnomesToFilter)
+        gnomesToFilter = filterByAge(gnomesToFilter, selectedAgeRange)
+        gnomesToFilter = filterByHeight(gnomesToFilter, selectedHeightRange)
+        gnomesToFilter = filterByWeight(gnomesToFilter, selectedWeightRange)
         setFilterredGnomes(gnomesToFilter)
     }
 
@@ -59,7 +61,7 @@ export const Home = () => {
             <>
                 <div className='d-flex flex-column' style={{ borderBottom: '2px solid grey', paddingBottom: '10px' }}>
                     <div className='d-flex flex-row '>
-                        <div className='d-flex'>
+                        <div className='d-flex flex-column'>
                             <Input focus
                                 placeholder='Nombre...'
                                 value={searchText}
@@ -73,6 +75,55 @@ export const Home = () => {
                                 onChange={(e, d) => setSelectedProfession(String(d.value))}
                                 clearable={true}
                             />
+
+                            <div  className = 'my-4 mx-2'>
+                                <label className ='mb-3'>
+                                    Age
+                                </label>
+                                <InputRange
+                                    maxValue={100}
+                                    minValue={0}
+                                    step={1}
+                                    value={selectedAgeRange}
+                                    //@ts-ignore
+                                    onChange={(value) => {
+                                        console.log(value)
+                                        setSelectedAgeRange(value)
+                                    }}
+                                />
+                            </div>
+                            <div  className = 'my-4 mx-2'>
+                                <label className ='mb-3'>
+                                    Height
+                                </label>
+                                <InputRange
+                                    maxValue={100}
+                                    minValue={0}
+                                    step={1}
+                                    value={selectedHeightRange}
+                                    //@ts-ignore
+                                    onChange={(value) => {
+                                        console.log(value)
+                                        setSelectedHeightRange(value)
+                                    }}
+                                />
+                            </div>
+                            <div  className = 'my-4 mx-2'>
+                                <label className ='mb-3'>
+                                    Weight
+                                </label>
+                                <InputRange
+                                    maxValue={100}
+                                    minValue={0}
+                                    step={1}
+                                    value={selectedWeightRange}
+                                    //@ts-ignore
+                                    onChange={(value) => {
+                                        console.log(value)
+                                        setSelectedWeightRange(value)
+                                    }}
+                                />
+                            </div>
                             <Button
                                 type='submit'
                                 className='ml-3'

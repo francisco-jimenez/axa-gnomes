@@ -20,6 +20,27 @@ export const filterByProfession  =(gnomes: Array<Gnome>, profession: string) => 
         return gnomes
     }
 }
+export const filterByAge  =(gnomes: Array<Gnome>, age: {min : number, max: number}) => {
+    if(age){
+        return collection.filter(gnomes, function(gnome: Gnome) { return gnome.age> age.min && gnome.age< age.max})
+    } else {
+        return gnomes
+    }
+}
+export const filterByHeight  =(gnomes: Array<Gnome>, height: {min : number, max: number}) => {
+    if(height){
+        return collection.filter(gnomes, function(gnome: Gnome) { return gnome.height> height.min && gnome.height< height.max})
+    } else {
+        return gnomes
+    }
+}
+export const filterByWeight  =(gnomes: Array<Gnome>, weight: {min : number, max: number}) => {
+    if(weight){
+        return collection.filter(gnomes, function(gnome: Gnome) { return gnome.weight> weight.min && gnome.weight< weight.max})
+    } else {
+        return gnomes
+    }
+}
 
 
 export const getProfessions =(gnomes: Array<Gnome>) => {
