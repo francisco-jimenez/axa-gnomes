@@ -16,7 +16,7 @@ const Tags: FunctionComponent<Props> = (props: Props) => {
             }
             {props.tags.map &&
                 props.tags.map((item: any) => (
-                    <Label  style={{backgroundColor: '#ff3550',color :'white', height: 'min-content', marginRight: '8px', marginTop: '5px' }}>
+                    <Label  style={{backgroundColor: 'lightgrey',color :'black', height: 'min-content', marginRight: '8px', marginTop: '5px' }}>
                         {item}
                     </Label>
                 ))
