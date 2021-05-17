@@ -14,10 +14,10 @@ interface Props {
 
 const Paginator: FunctionComponent<Props> = (props: Props) => {
 
-    const [paginationPageSize, setPaginationPageSize] = useState(props.paginationPageSize)
+    const [paginationPageSize, setPaginationPageSize] = useState(10)
 
     return (
-        <div className='d-flex w-100  align-items-end justify-content-center'>
+        <div className='d-flex w-100  align-items-start justify-content-center'>
 
 
             <Pagination
@@ -34,19 +34,23 @@ const Paginator: FunctionComponent<Props> = (props: Props) => {
                 itemClass="page-item"
                 linkClass="page-link"
             />
-            <div className='d-flex'>
+            {/* <div className='d-flex'>
                 <label className='ml-4 mr-1 mt-2'>
                     Items:
                 </label>
-                <select 
-                    multiple ={false}
-                    defaultValue ={paginationPageSize}
-                    onChange={(v) => { 
-                        props.setPaginationPageSize(Number(v)) 
-                        props.setActivePage(1)
-                    }}
+                <Dropdown
+                    selection
+                    // defaultValue={10}
+                    options={[
+                        { value: 10, label: '10' },
+                        { value: 20, label: '20' },
+                        { value: 30, label: '30' },
+                    ]}
+                    value={paginationPageSize}
+                    //@ts-ignore
+                    onChange={(e,data) => { setPaginationPageSize(data.value)}}
                 />
-            </div>
+            </div> */}
 
         </div>
     )

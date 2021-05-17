@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext } from "react"
-import { Button, Input } from 'semantic-ui-react'
+import { Button, Input, Pagination } from 'semantic-ui-react'
 import API from "../../services/API"
 import { FeedContext } from "../../contexts/FeedContext"
 import { useHistory, useLocation } from "react-router-dom"
 import { Gnome } from "../../models/Gnome"
 import { filterByName, getProfessions } from "../../utils"
 import GnomeCard from "../../components/GnomeCard"
+import Paginator from "../../components/Paginator"
 
 
 export const Home = () => {
@@ -22,11 +23,11 @@ export const Home = () => {
     let location = useLocation();
     let parsed = '';
 
-    useEffect(() => {
-        console.log(location);
-        parsed = queryString.parse(window.location.search);
-        console.log(parsed)
-    }, [location])
+    // useEffect(() => {
+    //     console.log(location);
+    //     parsed = queryString.parse(window.location.search);
+    //     console.log(parsed)
+    // }, [location])
 
 
     useEffect(() => {
@@ -36,12 +37,14 @@ export const Home = () => {
         const doGetFeed = async () => {
             await API.getInitialFeed()
                 .then((response: any) => {
-                    console.log(response.data.Brastlewark)
-                    setFeed(response.data.Brastlewark)
-                    setProfessionsList(getProfessions(feed))
+                    let gnomesList = response.data.Brastlewark
+                    console.log(gnomesList)
+                    setFeed(gnomesList)
+                    setProfessionsList(getProfessions(gnomesList))
                 })
                 .catch((error) => {
                     alert('error')
+                    console.log(error)
                 })
         }
 
@@ -51,7 +54,7 @@ export const Home = () => {
 
     const doSearch = async () => {
         // setLoading(true)
-        history.push(`/?gnome=${searchText}`)
+        // history.push(`/?gnome=${searchText}`)
         setFeed(filterByName(feed, searchText))
         // await API.search(searchText, sessionStorage.getItem('user') + '', prepareFiltersToSend())
         //     .then((response: any) => {
@@ -102,6 +105,13 @@ export const Home = () => {
                         </div>
                     )
                 })} */}
+                <Paginator 
+                    activePage ={1}
+                    paginationPageSize ={100}
+                    setActivePage ={() => {}}
+                    setPaginationPageSize ={() => {}}
+                    totalRecords ={12000}
+                />
             </div>
         </div>
     )
