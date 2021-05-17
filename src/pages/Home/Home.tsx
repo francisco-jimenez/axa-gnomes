@@ -7,6 +7,7 @@ import { Gnome } from "../../models/Gnome"
 import { filterByName, getProfessions } from "../../utils"
 import GnomeCard from "../../components/GnomeCard"
 import Paginator from "../../components/Paginator"
+import { DisplayedGnomes } from "../../contexts/DisplayedGnomesContext"
 
 
 export const Home = () => {
@@ -16,12 +17,12 @@ export const Home = () => {
     const [professionsList, setProfessionsList] = useState([] as String[])
     // const [feedItems, setFeedItems] = useState([] as any[])
     const [loading, setLoading] = useState(false)
-    const [allGnomes, setAllGnomes] = useContext(AllGnomes)
+    const [allGnomes, setAllGnomes] = useState([])
+    const [displayedGnomes, setDisplayedGnomes] = useState([])
+    const [filterredGnomes, setFilterredGnomes] = useState([])
+
 
     useEffect(() => {
-        // const parsed = queryString.parse(window.location.search);
-
-
         const doGetFeed = async () => {
             setLoading(true)
             await API.getInitialFeed()
@@ -29,6 +30,7 @@ export const Home = () => {
                     let gnomesList = response.data.Brastlewark
                     console.log(gnomesList)
                     setAllGnomes(gnomesList)
+                    setFilterredGnomes(gnomesList)
                     setProfessionsList(getProfessions(gnomesList))
                 })
                 .catch((error) => {
@@ -38,14 +40,13 @@ export const Home = () => {
                 .finally(() => { setLoading(false) })
         }
 
-        !allGnomes && doGetFeed()
+        doGetFeed()
     }, [])
-
 
     const doSearch = async () => {
         // setLoading(true)
         // history.push(`/?gnome=${searchText}`)
-        setAllGnomes(filterByName(allGnomes, searchText))
+        setFilterredGnomes(filterByName(allGnomes, searchText))
         // await API.search(searchText, sessionStorage.getItem('user') + '', prepareFiltersToSend())
         //     .then((response: any) => {
         //         setFeedItems(response.data)
@@ -65,7 +66,6 @@ export const Home = () => {
                         <div className='d-flex'>
                             <Input focus
                                 placeholder='Nombre...'
-                                // style={{ width: '600px' }}
                                 value={searchText}
                                 onChange={(e, d) => { setSearchText(d.value) }}
                             />
@@ -74,7 +74,6 @@ export const Home = () => {
                                 className='ml-3'
                                 onClick={() => doSearch()}
                                 loading={loading}
-                            // disabled={searchText === ''}
                             >
                                 Buscar
                     </Button>
@@ -86,7 +85,7 @@ export const Home = () => {
                 }
                 {!loading &&
                     <div className='d-flex flex-wrap justify-content-between'>
-                        {allGnomes && allGnomes.length > 0 && allGnomes.map((gnome: any) => {
+                        {displayedGnomes && displayedGnomes.length > 0 && displayedGnomes.map((gnome: any) => {
                             return (
                                 <GnomeCard
                                     key={gnome.id}
@@ -94,22 +93,15 @@ export const Home = () => {
                                 />
                             )
                         })}
-                        {/* {feed && feed.length > 0 && feed.map((gnome: Gnome) => {
-                    return (
-                        <div>
-                            {gnome.name}
-                        </div>
-                    )
-                })} */}
-                        {allGnomes && allGnomes.length > 0 &&
+                        {filterredGnomes && filterredGnomes.length > 0 &&
                             <Paginator
-                                activePage={1}
-                                paginationPageSize={100}
-                                setActivePage={() => { }}
-                                setPaginationPageSize={() => { }}
-                                totalRecords={12000}
+                                filterredRecords={filterredGnomes}
+                                setDisplayedRecords={setDisplayedGnomes}
                             />
                         }
+                        {console.log('all',allGnomes)}
+                        {console.log('filterred',filterredGnomes)}
+                        {console.log('displayed',displayedGnomes)}
 
                     </div>
                 }

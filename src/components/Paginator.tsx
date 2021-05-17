@@ -1,57 +1,51 @@
 
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { useState } from 'react';
 import Pagination from "react-js-pagination";
+import { Gnome } from '../models/Gnome';
 
 interface Props {
-    activePage: number,
-    paginationPageSize: any,
-    setPaginationPageSize: any,
-    totalRecords: number,
-    setActivePage: any
+    // activePage: number,
+    // paginationPageSize: any,
+    // setPaginationPageSize: any,
+    // totalRecords: number,
+    // setActivePage: any
+    filterredRecords: Array<Gnome>
+    setDisplayedRecords: any
 };
 
 
 const Paginator: FunctionComponent<Props> = (props: Props) => {
 
-    const [paginationPageSize, setPaginationPageSize] = useState(10)
+    const paginationPageSize = 21
+    const [activePage, setActivePage] = useState(1)
+
+    useEffect(() => {
+        setActivePage(1)
+        props.setDisplayedRecords(props.filterredRecords.slice(0,paginationPageSize))
+    }, [props.filterredRecords])
+
+    useEffect(() => {
+        let elementsToSkip = (activePage -1) * paginationPageSize
+        let lastElementToShow = elementsToSkip + paginationPageSize
+        props.setDisplayedRecords(props.filterredRecords.slice(elementsToSkip,lastElementToShow))
+    }, [activePage])
 
     return (
         <div className='d-flex w-100  align-items-start justify-content-center'>
-
-
             <Pagination
-                activePage={props.activePage}
-                itemsCountPerPage={props.paginationPageSize}
-                totalItemsCount={props.totalRecords}
+                activePage={activePage}
+                itemsCountPerPage={paginationPageSize}
+                totalItemsCount={props.filterredRecords.length}
                 pageRangeDisplayed={5}
                 onChange={
                     (activePage: any) => {
-                        props.setActivePage(activePage)
+                        setActivePage(activePage)
                     }
-
                 }
                 itemClass="page-item"
                 linkClass="page-link"
             />
-            {/* <div className='d-flex'>
-                <label className='ml-4 mr-1 mt-2'>
-                    Items:
-                </label>
-                <Dropdown
-                    selection
-                    // defaultValue={10}
-                    options={[
-                        { value: 10, label: '10' },
-                        { value: 20, label: '20' },
-                        { value: 30, label: '30' },
-                    ]}
-                    value={paginationPageSize}
-                    //@ts-ignore
-                    onChange={(e,data) => { setPaginationPageSize(data.value)}}
-                />
-            </div> */}
-
         </div>
     )
 }

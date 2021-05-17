@@ -4,11 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AllGnomesProvider } from './contexts/AllGnomesContext';
+import { DisplayedGnomesProvider } from './contexts/DisplayedGnomesContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <AllGnomesProvider>
-      <App />
+      <DisplayedGnomesProvider>
+        <App />
+      </DisplayedGnomesProvider>
     </AllGnomesProvider>
   </React.StrictMode>,
   document.getElementById('root')
