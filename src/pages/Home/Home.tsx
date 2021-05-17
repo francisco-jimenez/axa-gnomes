@@ -4,6 +4,7 @@ import API from "../../services/API"
 import { FeedContext } from "../../contexts/FeedContext"
 import { useHistory, useLocation } from "react-router-dom"
 import { Gnome } from "../../models/Gnome"
+import { filterByName } from "../../utils"
 
 
 export const Home = () => {
@@ -48,6 +49,7 @@ export const Home = () => {
     const doSearch = async () => {
         // setLoading(true)
         history.push(`/?gnome=${searchText}`)
+        setFeed(filterByName(feed,searchText))
         // await API.search(searchText, sessionStorage.getItem('user') + '', prepareFiltersToSend())
         //     .then((response: any) => {
         //         setFeedItems(response.data)
@@ -74,7 +76,7 @@ export const Home = () => {
                             className='ml-3'
                             onClick={() => doSearch()}
                             loading={loading}
-                            disabled={searchText === ''}
+                            // disabled={searchText === ''}
                         >
                             Buscar
                     </Button>
