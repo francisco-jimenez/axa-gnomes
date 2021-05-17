@@ -42,13 +42,11 @@ const SearchModal: FunctionComponent<Props> = (props: Props) => {
     const [hairColorsList, setHairColorsList] = useState([] as String[])
 
     const getProfessionsAndRangesPossibleValues = (gnomesList: Array<Gnome>) => {
-        console.log('entra')
-        debugger
         let possibleValues = getPossibleValues(gnomesList)
-        
+
         setProfessionsList(possibleValues.professions)
         setHairColorsList(possibleValues.hairColors)
-        
+
         setMinAge(possibleValues.minAge)
         setMaxAge(possibleValues.maxAge)
         setSelectedAgeRange({ min: possibleValues.minAge, max: possibleValues.maxAge })
@@ -62,7 +60,19 @@ const SearchModal: FunctionComponent<Props> = (props: Props) => {
         setSelectedWeightRange({ min: possibleValues.minWeight, max: possibleValues.maxWeight })
     }
 
-    const doSearch = async () => {
+
+    const reset = () => {
+        setSelectedWeightRange({ min: minWeight, max: maxWeight })
+        setSelectedHeightRange({ min: minHeight, max: maxHeight })
+        setSelectedAgeRange({ min: minAge, max: maxAge })
+        setSelectedHairColor('')
+        setSelectedProfession('')
+        setSearchText('')
+    }
+
+
+
+    const doSearch = () => {
         let gnomesToFilter = props.allGnomes
         gnomesToFilter = filterByName(gnomesToFilter, searchText)
         gnomesToFilter = filterByProfession(gnomesToFilter, selectedProfession)
@@ -95,6 +105,7 @@ const SearchModal: FunctionComponent<Props> = (props: Props) => {
                         placeholder='Profession'
                         search
                         selection
+                        value={selectedProfession}
                         //@ts-ignore
                         options={transformArrayIntoSelectOptions(professionsList)}
                         onChange={(e, d) => setSelectedProfession(String(d.value))}
@@ -106,13 +117,14 @@ const SearchModal: FunctionComponent<Props> = (props: Props) => {
                         placeholder='Hair Color'
                         search
                         selection
+                        value={selectedHairColor}
                         //@ts-ignore
                         options={transformArrayIntoSelectOptions(hairColorsList)}
                         onChange={(e, d) => setSelectedHairColor(String(d.value))}
                         clearable={true}
                     />
                 </div>
-                <div className ='d-flex justify-content-between'>
+                <div className='d-flex justify-content-between'>
                     {minAge && maxAge && selectedAgeRange.min &&
                         <div className='m-4'>
                             <label className='mb-3'>
@@ -169,14 +181,20 @@ const SearchModal: FunctionComponent<Props> = (props: Props) => {
                         </div>
                     }
                 </div>
-                <Button
-                    type='submit'
-                    className='m-4'
-                    onClick={() => doSearch()}
-                    loading={props.loading}
-                >
-                    Buscar
+                <div>
+
+                    <Button
+                        type='submit'
+                        className='m-4'
+                        onClick={() => doSearch()}
+                        loading={props.loading}
+                    >
+                        Buscar
                     </Button>
+                    <u onClick={()=> reset()}>
+                        Reset
+                    </u>
+                </div>
                 {/* </div> */}
             </div>
         </div>
