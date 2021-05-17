@@ -43,7 +43,7 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
         <Card raised style={{ minHeight: 'fit-content', maxWidth: '300px', margin: '6px', borderRadius: '21px' }}
         // onClick={() => history.push(`/article?label=${props.type}&id=${props.id}`)}
         >
-            <Card.Content className='m-2' style ={{display: "flex", flexDirection: "column",justifyContent: "space-between"}}>
+            <Card.Content className='m-2' style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                 <Card.Header
                     style={{ fontSize: '15px', marginBottom: '4px' }}
                 >
@@ -54,7 +54,7 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
                         Hair color: {hair_color}
                     </div>
                 </Card.Meta>
-                <Card.Description style ={{height: '100%', display: "flex", flexDirection: 'column', justifyContent: "space-between"}}>
+                <Card.Description style={{ height: '100%', display: "flex", flexDirection: 'column', justifyContent: "space-between" }}>
                     <div className='d-flex justify-content-between'>
                         <div className='d-flex flex-column justify-content-between'>
                             {/* {renderSingleItem(FieldTypes.TITLE, 'nameeee')} */}
@@ -77,14 +77,24 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
                                         {friend}
                                     </u>
                                 ))}
+                                {showFriends &&
+                                    <Button
+                                        className='mt-auto'
+                                        basic
+                                        size='tiny'
+                                        onClick={() => { setShowFriends(false) }}
+                                    >
+                                        {'Hide friends'}
+                                    </Button>
+                                }
                                 {!showFriends &&
                                     <Button
-                                        className ='mt-auto'
+                                        className='mt-auto'
                                         basic
-                                        size ='mini'
+                                        size='tiny'
                                         onClick={() => { setShowFriends(true) }}
                                     >
-                                        {'Show '+ friends.length +' friends'}
+                                        {'Show ' + friends.length + ' friends'}
                                     </Button>
                                 }
                             </div>
