@@ -1,16 +1,18 @@
 import React, { useEffect, useState, useContext } from "react"
-import { Button,Input } from 'semantic-ui-react'
+import { Button, Input } from 'semantic-ui-react'
 import API from "../../services/API"
 import { FeedContext } from "../../contexts/FeedContext"
 import { useHistory, useLocation } from "react-router-dom"
 import { Gnome } from "../../models/Gnome"
-import { filterByName } from "../../utils"
+import { filterByName, getProfessions } from "../../utils"
+import GnomeCard from "../../components/GnomeCard"
 
 
 export const Home = () => {
 
-    const [selectedFilters, setSelectedFilters] = useState([] as any[])
+
     const [searchText, setSearchText] = useState('')
+    const [professionsList, setProfessionsList] = useState([] as String[])
     // const [feedItems, setFeedItems] = useState([] as any[])
     const [loading, setLoading] = useState(false)
     const [feed, setFeed] = useContext(FeedContext)
@@ -19,7 +21,7 @@ export const Home = () => {
     let history = useHistory();
     let location = useLocation();
     let parsed = '';
-    
+
     useEffect(() => {
         console.log(location);
         parsed = queryString.parse(window.location.search);
@@ -36,20 +38,21 @@ export const Home = () => {
                 .then((response: any) => {
                     console.log(response.data.Brastlewark)
                     setFeed(response.data.Brastlewark)
+                    setProfessionsList(getProfessions(feed))
                 })
                 .catch((error) => {
                     alert('error')
                 })
         }
 
-        doGetFeed()
+        !feed && doGetFeed()
     }, [])
 
 
     const doSearch = async () => {
         // setLoading(true)
         history.push(`/?gnome=${searchText}`)
-        setFeed(filterByName(feed,searchText))
+        setFeed(filterByName(feed, searchText))
         // await API.search(searchText, sessionStorage.getItem('user') + '', prepareFiltersToSend())
         //     .then((response: any) => {
         //         setFeedItems(response.data)
@@ -76,35 +79,29 @@ export const Home = () => {
                             className='ml-3'
                             onClick={() => doSearch()}
                             loading={loading}
-                            // disabled={searchText === ''}
+                        // disabled={searchText === ''}
                         >
                             Buscar
                     </Button>
                     </div>
                 </div>
             </div>
-            <div>
-                {console.log(feed)}
-                {/* {feed && feed.length > 0 && feed.map((item: any) => {
+            <div className ='d-flex flex-wrap justify-content-between'>
+                {feed && feed.length > 0 && feed.map((gnome: any) => {
                     return (
                         <GnomeCard
-                            title={item.listaProp.titulo}
-                            date={item.listaProp.fecha}
-                            source={item.listaProp.fuente}
-                            type={item.listaProp.label}
-                            path={item.path}
-                            tag={item.tag}
-                            id={item.listaProp.id}
+                            key={gnome.id}
+                            gnome={gnome}
                         />
                     )
-                })} */}
-                {feed && feed.length > 0 && feed.map((gnome: Gnome) => {
+                })}
+                {/* {feed && feed.length > 0 && feed.map((gnome: Gnome) => {
                     return (
                         <div>
                             {gnome.name}
                         </div>
                     )
-                })}
+                })} */}
             </div>
         </div>
     )

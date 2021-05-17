@@ -2,6 +2,7 @@ import { cloneElement } from "react";
 import { Gnome } from "./models/Gnome"
 
 var collection = require('lodash/collection');
+var array = require('lodash/array');
 
 export const filterByName  =(gnomes: Array<Gnome>, searchString: string) => {
     if(searchString){
@@ -11,3 +12,16 @@ export const filterByName  =(gnomes: Array<Gnome>, searchString: string) => {
         return gnomes
     }
 }
+
+
+export const getProfessions =(gnomes: Array<Gnome>) => {
+    let professions =[] as any[]
+
+    for (const gnome of gnomes) {
+        let notIncludedProfessions = array.pullAll(gnome.professions,professions)
+        professions.push(...notIncludedProfessions)
+    }
+
+    return professions.map(string => string.trim()).sort()
+}
+
