@@ -1,11 +1,12 @@
-import React, { FunctionComponent } from "react"
-import { Card } from "semantic-ui-react"
+import React, { FunctionComponent, useState } from "react"
+import { Button, Card } from "semantic-ui-react"
 import { Gnome } from "../models/Gnome";
+import Tooltip from 'react-tooltip-lite';
 
 import Tags from "./Tags";
 interface Props {
     gnome: Gnome
-    setGnomeFriendsView: (gnome: Gnome) => void
+    setGnomeFriendsView: (gnomeName: String) => void
     // onChangeMode: (mode: HierachyTypes) => void
 };
 
@@ -13,6 +14,8 @@ interface Props {
 const GnomeCard: FunctionComponent<Props> = (props: Props) => {
 
     var math = require('lodash/math');
+
+    const [showFriends, setShowFriends] = useState(false)
 
 
     const { name, age, hair_color, professions, height, weight, thumbnail, friends } = props.gnome
@@ -40,7 +43,7 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
         <Card raised style={{ minHeight: 'fit-content', maxWidth: '300px', margin: '6px', borderRadius: '21px' }}
         // onClick={() => history.push(`/article?label=${props.type}&id=${props.id}`)}
         >
-            <Card.Content className='m-2'>
+            <Card.Content className='m-2' style ={{display: "flex", flexDirection: "column",justifyContent: "space-between"}}>
                 <Card.Header
                     style={{ fontSize: '15px', marginBottom: '4px' }}
                 >
@@ -51,7 +54,7 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
                         Hair color: {hair_color}
                     </div>
                 </Card.Meta>
-                <Card.Description>
+                <Card.Description style ={{height: '100%', display: "flex", flexDirection: 'column', justifyContent: "space-between"}}>
                     <div className='d-flex justify-content-between'>
                         <div className='d-flex flex-column justify-content-between'>
                             {/* {renderSingleItem(FieldTypes.TITLE, 'nameeee')} */}
@@ -66,10 +69,24 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
                             <Tags tags={professions} />
                         </div>
                         {friends.length > 0 &&
-                            <div style={{ position: 'absolute', fontWeight:'bold', textDecoration:'underline', bottom: '7px', display: 'flex', width: '100%', cursor: 'pointer' }}
-                                onClick ={()=> {props.setGnomeFriendsView(props.gnome)}}
-                            >
-                                Friends: {friends.length}
+                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', cursor: 'pointer' }}>
+                                {showFriends && friends.map((friend) => (
+                                    <u
+                                        onClick={() => { props.setGnomeFriendsView(friend) }}
+                                    >
+                                        {friend}
+                                    </u>
+                                ))}
+                                {!showFriends &&
+                                    <Button
+                                        className ='mt-auto'
+                                        basic
+                                        size ='mini'
+                                        onClick={() => { setShowFriends(true) }}
+                                    >
+                                        {'Show '+ friends.length +' friends'}
+                                    </Button>
+                                }
                             </div>
                         }
                     </div>

@@ -20,7 +20,7 @@ export const Home = () => {
     const [displayedGnomes, setDisplayedGnomes] = useState([])
     const [filterredGnomes, setFilterredGnomes] = useState([])
 
-    const [showSearchModal, setShowSearchModal] = useState(false)
+    // const [showSearchModal, setShowSearchModal] = useState(false)
 
 
     useEffect(() => {
@@ -53,25 +53,17 @@ export const Home = () => {
                 }
                 {!loading &&
                     <>
-                        <div className ='d-flex justify-content-center align-items-center px-5 mx-5'>
+                        <div className='d-flex justify-content-center align-items-center px-5 mx-5'>
                             <img
                                 src={'/Gnomle.png'}
                                 style={{ height: '100px' }}
                             />
-                            <Button
-                                className = 'ml-5'
-                                content={showSearchModal?'Hide filters':'Show filters'}
-                                basic
-                                onClick={() => { setShowSearchModal(!showSearchModal) }}
-                            />
                         </div>
-                        {showSearchModal &&
-                            <SearchModal
-                                allGnomes={allGnomes}
-                                setFilterredGnomes={setFilterredGnomes}
-                                loading={loading}
-                            />
-                        }
+                        <SearchModal
+                            allGnomes={allGnomes}
+                            setFilterredGnomes={setFilterredGnomes}
+                            loading={loading}
+                        />
                         <div className='d-flex flex-wrap justify-content-center'>
                             {filterredGnomes && filterredGnomes.length === 0 &&
                                 <div>
@@ -83,7 +75,7 @@ export const Home = () => {
                                     <GnomeCard
                                         key={gnome.id}
                                         gnome={gnome}
-                                        setGnomeFriendsView={(gnome) => console.log(gnome.friends)}
+                                        setGnomeFriendsView={(gnome) => console.log(gnome)}
                                     />
                                 )
                             })}
