@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { FeedProvider } from './contexts/FeedContext';
+import { AllGnomesProvider } from './contexts/AllGnomesContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <FeedProvider>
+    <AllGnomesProvider>
       <App />
-    </FeedProvider>
+    </AllGnomesProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
