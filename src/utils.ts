@@ -43,15 +43,49 @@ export const filterByWeight  =(gnomes: Array<Gnome>, weight: {min : number, max:
 }
 
 
-export const getProfessions =(gnomes: Array<Gnome>) => {
+export const getPossibleValues =(gnomes: Array<Gnome>) => {
     let professions =[] as any[]
+    let minHeight = null
+    let maxHeight = null
+    let minWeight = null
+    let maxWeight = null
+    let minAge = null
+    let maxAge = null
 
     for (const gnome of gnomes) {
         let notIncludedProfessions = array.pullAll(gnome.professions,professions)
         professions.push(...notIncludedProfessions)
+
+        if(!minHeight || gnome.height <  minHeight) {
+            minHeight = gnome.height
+        }
+        if(!maxHeight || gnome.height >  maxHeight) {
+            maxHeight = gnome.height
+        }
+        if(!minWeight || gnome.weight <  minWeight) {
+            minWeight = gnome.weight
+        }
+        if(!maxWeight || gnome.weight >  maxWeight) {
+            maxWeight = gnome.weight
+        }
+        if(!minAge || gnome.age <  minAge) {
+            minAge = gnome.age
+        }
+        if(!maxAge || gnome.age >  maxAge) {
+            maxAge = gnome.age
+        }
     }
 
-    return professions.map(string => string.trim()).sort()
+    return {
+        professions: professions.map(string => string.trim()).sort(),
+        minHeight : minHeight ? minHeight: 0,
+        maxHeight : maxHeight? maxHeight : 100,
+        minWeight : minWeight? minWeight: 0,
+        maxWeight : maxWeight? maxWeight: 100,
+        minAge : minAge? minAge: 0,
+        maxAge : maxAge? maxAge : 100
+    }
+    
 }
 
 

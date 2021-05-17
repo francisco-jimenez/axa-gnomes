@@ -50,3 +50,7 @@
 .ui.button {
   border-radius: 21px !important
 }
+
+.input-range__label-container {
+  display:none
+}

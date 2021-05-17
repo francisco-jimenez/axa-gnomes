@@ -1,25 +1,57 @@
 import React, { useEffect, useState, useContext } from "react"
 import { Button, Input, Pagination, Loader, Dropdown } from 'semantic-ui-react'
 import API from "../../services/API"
-import { filterByAge, filterByHeight, filterByName, filterByProfession, filterByWeight, getProfessions, transformProfessionsIntoSelectOptions } from "../../utils"
+import { filterByAge, filterByHeight, filterByName, filterByProfession, filterByWeight, getPossibleValues, transformProfessionsIntoSelectOptions } from "../../utils"
 import GnomeCard from "../../components/GnomeCard"
 import Paginator from "../../components/Paginator"
 import InputRange from 'react-input-range';
+import { Gnome } from "../../models/Gnome"
+
+var math = require('lodash/math');
 
 export const Home = () => {
 
 
+    const [loading, setLoading] = useState(false)
+
     const [searchText, setSearchText] = useState('')
     const [professionsList, setProfessionsList] = useState([] as String[])
-    // const [feedItems, setFeedItems] = useState([] as any[])
-    const [loading, setLoading] = useState(false)
+
     const [allGnomes, setAllGnomes] = useState([])
     const [displayedGnomes, setDisplayedGnomes] = useState([])
     const [filterredGnomes, setFilterredGnomes] = useState([])
+
     const [selectedProfession, setSelectedProfession] = useState('')
-    const [selectedAgeRange, setSelectedAgeRange] = useState({ min: 0, max: 100 } as any)
-    const [selectedHeightRange, setSelectedHeightRange] = useState({ min: 0, max: 100 } as any)
-    const [selectedWeightRange, setSelectedWeightRange] = useState({ min: 0, max: 100 } as any)
+
+    const [minAge, setMinAge] = useState(0 as Number)
+    const [maxAge, setMaxAge] = useState(0 as Number)
+    const [selectedAgeRange, setSelectedAgeRange] = useState({ } as any)
+
+    const [minHeight, setMinHeight] = useState(0 as Number)
+    const [maxHeight, setMaxHeight] = useState(0 as Number)
+    const [selectedHeightRange, setSelectedHeightRange] = useState({  } as any)
+
+    const [minWeight, setMinWeight] = useState(0 as Number)
+    const [maxWeight, setMaxWeight] = useState(0 as Number)
+    const [selectedWeightRange, setSelectedWeightRange] = useState({  } as any)
+
+
+    const getProfessionsAndRangesPossibleValues = (gnomesList: Array<Gnome>) => {
+        let possibleValues = getPossibleValues(gnomesList)
+        setProfessionsList(possibleValues.professions)
+
+        setMinAge(possibleValues.minAge)
+        setMaxAge(possibleValues.maxAge)
+        setSelectedAgeRange({ min: possibleValues.minAge, max: possibleValues.maxAge })
+
+        setMinHeight(possibleValues.minHeight)
+        setMaxHeight(possibleValues.maxHeight)
+        setSelectedHeightRange({ min: possibleValues.minHeight, max: possibleValues.maxHeight })
+
+        setMinWeight(possibleValues.minWeight)
+        setMaxWeight(possibleValues.maxWeight)
+        setSelectedWeightRange({ min: possibleValues.minWeight, max: possibleValues.maxWeight })
+    }
 
 
     useEffect(() => {
@@ -31,7 +63,7 @@ export const Home = () => {
                     console.log(gnomesList)
                     setAllGnomes(gnomesList)
                     setFilterredGnomes(gnomesList)
-                    setProfessionsList(getProfessions(gnomesList))
+                    getProfessionsAndRangesPossibleValues(gnomesList)
                 })
                 .catch((error) => {
                     alert('error')
@@ -46,9 +78,7 @@ export const Home = () => {
     const doSearch = async () => {
         let gnomesToFilter = allGnomes
         gnomesToFilter = filterByName(gnomesToFilter, searchText)
-        console.log('after name', gnomesToFilter)
         gnomesToFilter = filterByProfession(gnomesToFilter, selectedProfession)
-        console.log('after profession', gnomesToFilter)
         gnomesToFilter = filterByAge(gnomesToFilter, selectedAgeRange)
         gnomesToFilter = filterByHeight(gnomesToFilter, selectedHeightRange)
         gnomesToFilter = filterByWeight(gnomesToFilter, selectedWeightRange)
@@ -57,17 +87,17 @@ export const Home = () => {
 
     return (
         <div className='m-3'>
-
             <>
                 <div className='d-flex flex-column' style={{ borderBottom: '2px solid grey', paddingBottom: '10px' }}>
                     <div className='d-flex flex-row '>
                         <div className='d-flex flex-column'>
                             <Input focus
-                                placeholder='Nombre...'
+                                placeholder='Name'
                                 value={searchText}
                                 onChange={(e, d) => { setSearchText(d.value) }}
                             />
                             <Dropdown
+                                placeholder ='Profession'
                                 search
                                 selection
                                 //@ts-ignore
@@ -75,55 +105,61 @@ export const Home = () => {
                                 onChange={(e, d) => setSelectedProfession(String(d.value))}
                                 clearable={true}
                             />
+                            {minAge && maxAge && selectedAgeRange.min &&
+                                <div className='my-4 mx-2'>
+                                    <label className='mb-3'>
+                                        Age {'(' + selectedAgeRange.min + ' - ' + selectedAgeRange.max + ')'}
+                                    </label>
+                                    <InputRange
+                                        maxValue={maxAge.valueOf()}
+                                        minValue={minAge.valueOf()}
+                                        step={1}
+                                        value={selectedAgeRange}
+                                        //@ts-ignore
+                                        onChange={(value) => {
+                                            console.log(value)
+                                            setSelectedAgeRange(value)
+                                        }}
+                                    />
+                                </div>
+                            }
+                            {minHeight && maxHeight > 0 &&
+                                <div className='my-4 mx-2'>
+                                    <label className='mb-3'>
+                                        Height {'(' + math.round(selectedHeightRange.min, 1) + ' - ' + math.round(selectedHeightRange.max, 1) + ')'}
+                                    </label>
+                                    <InputRange
+                                        maxValue={maxHeight.valueOf()}
+                                        minValue={minHeight.valueOf()}
+                                        step={0.1}
+                                        value={selectedHeightRange}
+                                        //@ts-ignore
+                                        onChange={(value) => {
+                                            console.log(value)
+                                            setSelectedHeightRange(value)
+                                        }}
 
-                            <div  className = 'my-4 mx-2'>
-                                <label className ='mb-3'>
-                                    Age
-                                </label>
-                                <InputRange
-                                    maxValue={100}
-                                    minValue={0}
-                                    step={1}
-                                    value={selectedAgeRange}
-                                    //@ts-ignore
-                                    onChange={(value) => {
-                                        console.log(value)
-                                        setSelectedAgeRange(value)
-                                    }}
-                                />
-                            </div>
-                            <div  className = 'my-4 mx-2'>
-                                <label className ='mb-3'>
-                                    Height
-                                </label>
-                                <InputRange
-                                    maxValue={100}
-                                    minValue={0}
-                                    step={1}
-                                    value={selectedHeightRange}
-                                    //@ts-ignore
-                                    onChange={(value) => {
-                                        console.log(value)
-                                        setSelectedHeightRange(value)
-                                    }}
-                                />
-                            </div>
-                            <div  className = 'my-4 mx-2'>
-                                <label className ='mb-3'>
-                                    Weight
-                                </label>
-                                <InputRange
-                                    maxValue={100}
-                                    minValue={0}
-                                    step={1}
-                                    value={selectedWeightRange}
-                                    //@ts-ignore
-                                    onChange={(value) => {
-                                        console.log(value)
-                                        setSelectedWeightRange(value)
-                                    }}
-                                />
-                            </div>
+                                    />
+                                </div>
+                            }
+                            {minWeight && maxWeight > 0 &&
+                                <div className='my-4 mx-2'>
+                                    <label className='mb-3'>
+                                        Weight {'(' + math.round(selectedWeightRange.min, 1) + ' - ' + math.round(selectedWeightRange.max, 1) + ')'}
+                                    </label>
+                                    <InputRange
+                                        maxValue={maxWeight.valueOf()}
+                                        minValue={minWeight.valueOf()}
+                                        step={0.1}
+                                        value={selectedWeightRange}
+                                        //@ts-ignore
+                                        onChange={(value) => {
+                                            console.log(value)
+                                            setSelectedWeightRange(value)
+                                        }}
+                                    />
+                                </div>
+                            }
                             <Button
                                 type='submit'
                                 className='ml-3'
