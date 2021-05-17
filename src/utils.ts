@@ -13,6 +13,14 @@ export const filterByName  =(gnomes: Array<Gnome>, searchString: string) => {
     }
 }
 
+export const filterByProfession  =(gnomes: Array<Gnome>, profession: string) => {
+    if(profession){
+        return collection.filter(gnomes, function(gnome: Gnome) { return gnome.professions.map(prof => prof.trim()).includes(profession)})
+    } else {
+        return gnomes
+    }
+}
+
 
 export const getProfessions =(gnomes: Array<Gnome>) => {
     let professions =[] as any[]
@@ -24,4 +32,19 @@ export const getProfessions =(gnomes: Array<Gnome>) => {
 
     return professions.map(string => string.trim()).sort()
 }
+
+
+export const transformProfessionsIntoSelectOptions  =(professions: Array<String>) => {
+    return professions.map(profession => {
+        return {
+            key: profession,
+            value: profession,
+            text: profession
+        }
+    })
+
+}
+
+
+
 

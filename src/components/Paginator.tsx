@@ -5,11 +5,6 @@ import Pagination from "react-js-pagination";
 import { Gnome } from '../models/Gnome';
 
 interface Props {
-    // activePage: number,
-    // paginationPageSize: any,
-    // setPaginationPageSize: any,
-    // totalRecords: number,
-    // setActivePage: any
     filterredRecords: Array<Gnome>
     setDisplayedRecords: any
 };

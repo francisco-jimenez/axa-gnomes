@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from "react"
-import { Button, Input, Pagination, Loader } from 'semantic-ui-react'
+import { Button, Input, Pagination, Loader, Dropdown } from 'semantic-ui-react'
 import API from "../../services/API"
 import { AllGnomes } from "../../contexts/AllGnomesContext"
 import { useHistory, useLocation } from "react-router-dom"
 import { Gnome } from "../../models/Gnome"
-import { filterByName, getProfessions } from "../../utils"
+import { filterByName, filterByProfession, getProfessions, transformProfessionsIntoSelectOptions } from "../../utils"
 import GnomeCard from "../../components/GnomeCard"
 import Paginator from "../../components/Paginator"
 import { DisplayedGnomes } from "../../contexts/DisplayedGnomesContext"
@@ -20,6 +20,7 @@ export const Home = () => {
     const [allGnomes, setAllGnomes] = useState([])
     const [displayedGnomes, setDisplayedGnomes] = useState([])
     const [filterredGnomes, setFilterredGnomes] = useState([])
+    const [selectedProfession, setSelectedProfession] = useState('')
 
 
     useEffect(() => {
@@ -44,17 +45,12 @@ export const Home = () => {
     }, [])
 
     const doSearch = async () => {
-        // setLoading(true)
-        // history.push(`/?gnome=${searchText}`)
-        setFilterredGnomes(filterByName(allGnomes, searchText))
-        // await API.search(searchText, sessionStorage.getItem('user') + '', prepareFiltersToSend())
-        //     .then((response: any) => {
-        //         setFeedItems(response.data)
-        //         setFeed(response.data)
-        //     })
-        //     .catch((error) => {
-        //         alert('error')
-        //     }).finally(() => setLoading(false))
+        let gnomesToFilter = allGnomes
+        gnomesToFilter = filterByName(gnomesToFilter, searchText)
+        console.log('after name', gnomesToFilter)
+        gnomesToFilter = filterByProfession(gnomesToFilter, selectedProfession)
+        console.log('after profession', gnomesToFilter)
+        setFilterredGnomes(gnomesToFilter)
     }
 
     return (
@@ -68,6 +64,14 @@ export const Home = () => {
                                 placeholder='Nombre...'
                                 value={searchText}
                                 onChange={(e, d) => { setSearchText(d.value) }}
+                            />
+                            <Dropdown
+                                search
+                                selection
+                                //@ts-ignore
+                                options={transformProfessionsIntoSelectOptions(professionsList)}
+                                onChange={(e, d) => setSelectedProfession(String(d.value))}
+                                clearable={true}
                             />
                             <Button
                                 type='submit'
@@ -85,7 +89,12 @@ export const Home = () => {
                 }
                 {!loading &&
                     <div className='d-flex flex-wrap justify-content-between'>
-                        {displayedGnomes && displayedGnomes.length > 0 && displayedGnomes.map((gnome: any) => {
+                        {filterredGnomes && filterredGnomes.length === 0 &&
+                            <div>
+                                No results
+                            </div>
+                        }
+                        {filterredGnomes && filterredGnomes.length > 0 && displayedGnomes && displayedGnomes.length > 0 && displayedGnomes.map((gnome: any) => {
                             return (
                                 <GnomeCard
                                     key={gnome.id}
@@ -99,9 +108,9 @@ export const Home = () => {
                                 setDisplayedRecords={setDisplayedGnomes}
                             />
                         }
-                        {console.log('all',allGnomes)}
-                        {console.log('filterred',filterredGnomes)}
-                        {console.log('displayed',displayedGnomes)}
+                        {/* {console.log('all', allGnomes)}
+                        {console.log('filterred', filterredGnomes)}
+                        {console.log('displayed', displayedGnomes)} */}
 
                     </div>
                 }

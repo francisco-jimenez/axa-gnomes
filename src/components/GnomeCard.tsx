@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react"
 import { Card } from "semantic-ui-react"
 import { Gnome } from "../models/Gnome";
+
 import Tags from "./Tags";
 interface Props {
     gnome: Gnome
@@ -9,6 +10,9 @@ interface Props {
 
 
 const GnomeCard: FunctionComponent<Props> = (props: Props) => {
+
+    var math = require('lodash/math');
+
 
     const { name, age, hair_color, professions, height, weight, thumbnail } = props.gnome
 
@@ -51,8 +55,8 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
                         <div className='d-flex flex-column justify-content-between'>
                             {/* {renderSingleItem(FieldTypes.TITLE, 'nameeee')} */}
                             {renderSingleItem('Hair Color', hair_color)}
-                            {renderSingleItem('Height', height)}
-                            {renderSingleItem('Weight', weight)}
+                            {renderSingleItem('Height', math.round(height,2))}
+                            {renderSingleItem('Weight', math.round(weight,2))}
                         </div>
                         <img src={thumbnail} style={{ width: '100px', height: 'stretch', borderRadius: '10px' }} />
                     </div>
