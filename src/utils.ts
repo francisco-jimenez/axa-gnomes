@@ -20,6 +20,13 @@ export const filterByProfession  =(gnomes: Array<Gnome>, profession: string) => 
         return gnomes
     }
 }
+export const filterByHairColor  =(gnomes: Array<Gnome>, hairColor: String) => {
+    if(hairColor){
+        return collection.filter(gnomes, function(gnome: Gnome) { return gnome.hair_color === hairColor})
+    } else {
+        return gnomes
+    }
+}
 export const filterByAge  =(gnomes: Array<Gnome>, age: {min : number, max: number}) => {
     if(age){
         return collection.filter(gnomes, function(gnome: Gnome) { return gnome.age> age.min && gnome.age< age.max})
@@ -45,6 +52,7 @@ export const filterByWeight  =(gnomes: Array<Gnome>, weight: {min : number, max:
 
 export const getPossibleValues =(gnomes: Array<Gnome>) => {
     let professions =[] as any[]
+    let hairColors =[] as String[]
     let minHeight = null
     let maxHeight = null
     let minWeight = null
@@ -55,6 +63,10 @@ export const getPossibleValues =(gnomes: Array<Gnome>) => {
     for (const gnome of gnomes) {
         let notIncludedProfessions = array.pullAll(gnome.professions,professions)
         professions.push(...notIncludedProfessions)
+
+        if(!hairColors.includes(gnome.hair_color)){
+            hairColors.push(gnome.hair_color)
+        }
 
         if(!minHeight || gnome.height <  minHeight) {
             minHeight = gnome.height
@@ -78,6 +90,7 @@ export const getPossibleValues =(gnomes: Array<Gnome>) => {
 
     return {
         professions: professions.map(string => string.trim()).sort(),
+        hairColors: hairColors.sort(),
         minHeight : minHeight ? minHeight: 0,
         maxHeight : maxHeight? maxHeight : 100,
         minWeight : minWeight? minWeight: 0,
@@ -89,8 +102,8 @@ export const getPossibleValues =(gnomes: Array<Gnome>) => {
 }
 
 
-export const transformProfessionsIntoSelectOptions  =(professions: Array<String>) => {
-    return professions.map(profession => {
+export const transformArrayIntoSelectOptions  =(array: Array<string>) => {
+    return array.map(profession => {
         return {
             key: profession,
             value: profession,

@@ -12,7 +12,7 @@ interface Props {
 
 const Paginator: FunctionComponent<Props> = (props: Props) => {
 
-    const paginationPageSize = 21
+    const paginationPageSize = 20
     const [activePage, setActivePage] = useState(1)
 
     useEffect(() => {
@@ -27,7 +27,7 @@ const Paginator: FunctionComponent<Props> = (props: Props) => {
     }, [activePage])
 
     return (
-        <div className='d-flex w-100  align-items-start justify-content-center'>
+        <div className='d-flex w-100  my-5 align-items-start justify-content-center'>
             <Pagination
                 activePage={activePage}
                 itemsCountPerPage={paginationPageSize}
