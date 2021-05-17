@@ -6,7 +6,7 @@ import Tooltip from 'react-tooltip-lite';
 import Tags from "./Tags";
 interface Props {
     gnome: Gnome
-    setGnomeFriendsView: (gnomeName: String) => void
+    setGnomeFriendsView: (gnomeName: string) => void
     // onChangeMode: (mode: HierachyTypes) => void
 };
 
@@ -72,7 +72,7 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
                             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', cursor: 'pointer' }}>
                                 {showFriends && friends.map((friend) => (
                                     <u
-                                        onClick={() => { props.setGnomeFriendsView(friend) }}
+                                        onClick={() => { props.setGnomeFriendsView(''+friend) }}
                                     >
                                         {friend}
                                     </u>

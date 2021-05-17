@@ -1,14 +1,13 @@
-import React, { useEffect, useState, useContext } from "react"
-import { Button, Input, Pagination, Loader, Dropdown } from 'semantic-ui-react'
+import { useEffect, useState } from "react"
+import { Loader } from 'semantic-ui-react'
 import API from "../../services/API"
-import { filterByAge, filterByHeight, filterByName, filterByProfession, filterByWeight, getPossibleValues, transformArrayIntoSelectOptions } from "../../utils"
+import { filterByName } from "../../utils"
 import GnomeCard from "../../components/GnomeCard"
 import Paginator from "../../components/Paginator"
-import InputRange from 'react-input-range';
-import { Gnome } from "../../models/Gnome"
 import SearchModal from "../../components/SearchModal"
+//@ts-ignore
+import Modal, { closeStyle } from 'simple-react-modal'
 
-var math = require('lodash/math');
 
 export const Home = () => {
 
@@ -19,6 +18,8 @@ export const Home = () => {
     const [allGnomes, setAllGnomes] = useState([])
     const [displayedGnomes, setDisplayedGnomes] = useState([])
     const [filterredGnomes, setFilterredGnomes] = useState([])
+
+    const [gnomeFriendName, setGnomeFriendName] = useState('')
 
     // const [showSearchModal, setShowSearchModal] = useState(false)
 
@@ -64,6 +65,7 @@ export const Home = () => {
                             setFilterredGnomes={setFilterredGnomes}
                             loading={loading}
                         />
+                        {gnomeFriendName}
                         <div className='d-flex flex-wrap justify-content-center'>
                             {filterredGnomes && filterredGnomes.length === 0 &&
                                 <div>
@@ -75,7 +77,10 @@ export const Home = () => {
                                     <GnomeCard
                                         key={gnome.id}
                                         gnome={gnome}
-                                        setGnomeFriendsView={(gnome) => console.log(gnome)}
+                                        setGnomeFriendsView={(gnome) => {
+                                            setGnomeFriendName(gnome)
+                                            console.log(filterByName(allGnomes, gnome)[0])
+                                        }}
                                     />
                                 )
                             })}
@@ -85,9 +90,19 @@ export const Home = () => {
                                     setDisplayedRecords={setDisplayedGnomes}
                                 />
                             }
-                            {/* {console.log('all', allGnomes)}
-                        {console.log('filterred', filterredGnomes)}
-                        {console.log('displayed', displayedGnomes)} */}
+                            {gnomeFriendName &&
+                                <Modal
+                                    show={!!gnomeFriendName}
+                                    onClose ={()=> setGnomeFriendName('')}
+                                >
+                                    <GnomeCard
+                                        gnome={filterByName(allGnomes, gnomeFriendName)[0]}
+                                        setGnomeFriendsView={(gnome) => {
+                                            setGnomeFriendName(gnome)
+                                        }}
+                                    />
+                                </Modal>
+                            }
 
                         </div>
                     </>
