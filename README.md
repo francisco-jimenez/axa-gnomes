@@ -46,12 +46,13 @@
   Then a instance of Google Chrome will appear simulating interactions with the app and checking everuthing behaves as expected.
 
 ## Tech Stack
-    Tried to keep it as simple as possible, hate over-engineering.
 
-    React
-    Typescript
-    Cypress
-    [Semantic UI](https://react.semantic-ui.com/)
+  Tried to keep it as simple as possible, hate over-engineering.
+
+  React
+  Typescript
+  Cypress
+  [Semantic UI](https://react.semantic-ui.com/)
 
 
 ## Author 
