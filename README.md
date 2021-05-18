@@ -10,3 +10,52 @@
 <div>
   <img src="./public/screenshot.png" alt="screenshot" width="100%">
 </div>
+
+## Installation
+
+##### Clone this repository
+
+   ```bash
+     git clone https://github.com/rusomarques/brastlewark.git
+     cd axa-gnomes
+   ```
+
+##### Install & Start, you are ready to go!:
+
+   ```bash
+   npm install
+   npm start
+   ```
+
+
+## Testing 
+  This project includes a E2E testing solution based on [Cypress](https://www.cypress.io/), 
+
+  #### Caption!! You need to have your app started in order to run the tests.
+
+  By executing this command:
+  ```bash
+      npm run cypress:open
+  ```
+  A test suite will be open as a external window, click on 'gnomes.spec.js'
+
+  <div>
+     <img src="./public/screenshot.png" alt="screenshot" width="100%">
+  </div>
+
+  Then a instance of Google Chrome will appear simulating interactions with the app and checking everuthing behaves as expected.
+
+## Tech Stack
+    Tried to keep it as simple as possible, not over-engineering.
+
+    React
+    Typescript
+    Cypress
+    [Semantic UI](https://react.semantic-ui.com/)
+
+
+## Author 
+[Curro Jimenez](https://www.linkedin.com/in/franciscojimenez87/) 
+
+
+
