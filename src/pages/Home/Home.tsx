@@ -58,6 +58,7 @@ export const Home = () => {
                             <img
                                 className='logo-gnomle'
                                 src={'/Gnomle.png'}
+                                alt='logo'
                                 style={{ height: '100px' }}
                             />
                         </div>

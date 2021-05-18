@@ -85,7 +85,7 @@ const SearchModal: FunctionComponent<Props> = (props: Props) => {
 
     useEffect(() => {
         getProfessionsAndRangesPossibleValues(props.allGnomes)
-    }, [])
+    }, [props.allGnomes])
 
     return (
         <div className='d-flex flex-column p-4'>

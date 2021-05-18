@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { withRouter, Switch, Route, Redirect, RouteProps } from 'react-router-dom';
-import Home from './pages/Home/Home'
+import { Loader } from 'semantic-ui-react';
+const Home  = lazy(() => import('./pages/Home/Home'));
 
 
 
@@ -8,10 +9,12 @@ const Routes = ({ location }: RouteProps) => {
 
     return (
         <div>
-            <Switch location={location}>
-                <Route path="/home" component={Home} />
-                <Redirect to={'/home'} />
-            </Switch>
+            <Suspense fallback={<div>Cargando...</div>}>
+                <Switch location={location}>
+                    <Route path="/home" component={Home} />
+                    <Redirect to={'/home'} />
+                </Switch>
+            </Suspense>
         </div>
     )
 }

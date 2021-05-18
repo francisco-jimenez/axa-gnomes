@@ -14,17 +14,18 @@ const Paginator: FunctionComponent<Props> = (props: Props) => {
 
     const paginationPageSize = 20
     const [activePage, setActivePage] = useState(1)
+    const { setDisplayedRecords, filterredRecords } = props
 
     useEffect(() => {
         setActivePage(1)
-        props.setDisplayedRecords(props.filterredRecords.slice(0,paginationPageSize))
-    }, [props.filterredRecords])
+        setDisplayedRecords(filterredRecords.slice(0,paginationPageSize))
+    }, [filterredRecords,setDisplayedRecords])
 
     useEffect(() => {
         let elementsToSkip = (activePage -1) * paginationPageSize
         let lastElementToShow = elementsToSkip + paginationPageSize
-        props.setDisplayedRecords(props.filterredRecords.slice(elementsToSkip,lastElementToShow))
-    }, [activePage])
+        setDisplayedRecords(filterredRecords.slice(elementsToSkip,lastElementToShow))
+    }, [activePage,setDisplayedRecords,filterredRecords])
 
     return (
         <div className='d-flex w-100  my-5 align-items-start justify-content-center'>

@@ -1,7 +1,9 @@
 import { FunctionComponent, useState } from "react"
 import { Button, Card } from "semantic-ui-react"
 import { Gnome } from "../models/Gnome";
+import LazyLoad from 'react-lazyload';
 import './GnomeCard.css'
+
 
 import Tags from "./Tags";
 interface Props {
@@ -58,7 +60,9 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
                             {renderSingleItem('Height', math.round(height, 2))}
                             {renderSingleItem('Weight', math.round(weight, 2))}
                         </div>
-                        <img src={thumbnail} className ='gnome-card-img' />
+                        <LazyLoad once height={300}>
+                            <img src={thumbnail} alt='gnome-pic' className ='gnome-card-img' />
+                        </LazyLoad>
                     </div>
                     <div>
                         <div className='mt-auto mb-3'>

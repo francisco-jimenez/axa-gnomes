@@ -1,4 +1,4 @@
-import { cloneElement } from "react";
+
 import { Gnome } from "./models/Gnome"
 
 var collection = require('lodash/collection');
