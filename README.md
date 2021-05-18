@@ -8,5 +8,5 @@
 ##
 
 <div>
-  <img src="/screenshot.png" alt="screenshot" width="100%">
+  <img src="./public/screenshot.png" alt="screenshot" width="100%">
 </div>
