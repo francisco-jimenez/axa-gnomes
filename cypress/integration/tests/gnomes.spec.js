@@ -6,7 +6,7 @@ context('Gnomle tests', () => {
     it('first render, checking logo and search items are disaplyed correctly', () => {
         cy.visit('localhost:3000')
 
-        cy.wait(2000)
+        cy.wait(4000)
         cy.get(".logo-gnomle").should("be.visible");
         cy.get(".gnomle-search-input").should("be.visible");
         cy.get(".gnomle-profession-selector").should("be.visible");
