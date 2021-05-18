@@ -40,13 +40,13 @@
   A test suite will be open as a external window, click on 'gnomes.spec.js'
 
   <div>
-     <img src="./public/screenshot.png" alt="screenshot" width="100%">
+     <img src="./public/test-screenshot.png" alt="screenshot" width="100%">
   </div>
 
   Then a instance of Google Chrome will appear simulating interactions with the app and checking everuthing behaves as expected.
 
 ## Tech Stack
-    Tried to keep it as simple as possible, not over-engineering.
+    Tried to keep it as simple as possible, hate over-engineering.
 
     React
     Typescript
@@ -55,6 +55,7 @@
 
 
 ## Author 
+
 [Curro Jimenez](https://www.linkedin.com/in/franciscojimenez87/) 
 
 
