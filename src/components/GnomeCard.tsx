@@ -1,6 +1,7 @@
 import { FunctionComponent, useState } from "react"
 import { Button, Card } from "semantic-ui-react"
 import { Gnome } from "../models/Gnome";
+import './GnomeCard.css'
 
 import Tags from "./Tags";
 interface Props {
@@ -39,21 +40,17 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
     }
 
     return (
-        <Card raised style={{ minHeight: 'fit-content', maxWidth: '300px', margin: '6px', borderRadius: '21px' }}
-        // onClick={() => history.push(`/article?label=${props.type}&id=${props.id}`)}
-        >
-            <Card.Content className='m-2' style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                <Card.Header
-                    style={{ fontSize: '15px', marginBottom: '4px' }}
-                >
+        <Card raised className ='gnome-card-main'>
+            <Card.Content className='m-2 d-flex flex-column justify-content-between'>
+                <Card.Header className ='gnome-card-header'>
                     {name}
                 </Card.Header>
                 <Card.Meta className='text-left'>
-                    <div className='text-center' style={{ backgroundColor: hair_color.toLowerCase(), color: 'white', borderRadius: '6px', opacity: 0.7 }}>
+                    <div className='text-center gnome-card-hair' style={{ backgroundColor: hair_color.toLowerCase()}}>
                         Hair color: {hair_color}
                     </div>
                 </Card.Meta>
-                <Card.Description style={{ height: '100%', display: "flex", flexDirection: 'column', justifyContent: "space-between" }}>
+                <Card.Description className ='gnome-card-description'>
                     <div className='d-flex justify-content-between'>
                         <div className='d-flex flex-column justify-content-between'>
                             {/* {renderSingleItem(FieldTypes.TITLE, 'nameeee')} */}
@@ -61,14 +58,14 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
                             {renderSingleItem('Height', math.round(height, 2))}
                             {renderSingleItem('Weight', math.round(weight, 2))}
                         </div>
-                        <img src={thumbnail} style={{ width: '100px', height: 'stretch', borderRadius: '10px' }} />
+                        <img src={thumbnail} className ='gnome-card-img' />
                     </div>
                     <div>
                         <div className='mt-auto mb-3'>
                             <Tags tags={professions} />
                         </div>
                         {friends.length > 0 &&
-                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', cursor: 'pointer' }}>
+                            <div className ='gnome-card-friends'>
                                 {showFriends && friends.map((friend) => (
                                     <u
                                         onClick={() => { props.setGnomeFriendsView(''+friend) }}

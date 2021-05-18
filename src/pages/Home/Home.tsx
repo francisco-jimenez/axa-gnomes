@@ -7,6 +7,7 @@ import Paginator from "../../components/Paginator"
 import SearchModal from "../../components/SearchModal"
 //@ts-ignore
 import Modal from 'simple-react-modal'
+import './Home.css'
 
 
 export const Home = () => {
@@ -49,11 +50,11 @@ export const Home = () => {
             <>
 
                 {loading &&
-                    <Loader active size='massive' inline='centered' style={{ marginTop: '50px' }} />
+                    <Loader active size='massive' inline='centered' className='gnomes-loader' />
                 }
                 {!loading &&
                     <>
-                        <div className='d-flex justify-content-center align-items-center px-5 mx-5'>
+                        <div className='gnomes-img-wrapper'>
                             <img
                                 className='logo-gnomle'
                                 src={'/Gnomle.png'}
@@ -65,7 +66,7 @@ export const Home = () => {
                             setFilterredGnomes={setFilterredGnomes}
                             loading={loading}
                         />
-                        <div className='d-flex flex-wrap justify-content-center'>
+                        <div className='gnomes-result'>
                             {filterredGnomes && filterredGnomes.length === 0 &&
                                 <div>
                                     No results
