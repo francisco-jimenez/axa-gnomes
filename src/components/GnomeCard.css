@@ -1,14 +1,15 @@
 .gnome-card-description {
     height: 100%;
-    display: "flex";
+    display: flex;
     flex-direction: column; 
-    justify-content: "space-between"; 
+    justify-content: space-between; 
 }
 
 .gnome-card-img {
-    width: 100px; 
-    height: stretch; 
-    border-radius: 10px
+    width: 100px !important; 
+    /* height: stretch !important;  */
+    border-radius: 10px !important;
+    object-fit: cover;
 }
 
 
