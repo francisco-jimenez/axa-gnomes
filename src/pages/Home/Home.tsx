@@ -56,7 +56,7 @@ export const Home = () => {
                     <>
                         <div className='d-flex justify-content-center align-items-center px-5 mx-5'>
                             <img
-                                className ='logo-gnomle'
+                                className='logo-gnomle'
                                 src={'/Gnomle.png'}
                                 style={{ height: '100px' }}
                             />
@@ -93,15 +93,19 @@ export const Home = () => {
                             }
                             {gnomeFriendName &&
                                 <Modal
+                                    // className='friend-modal'
                                     show={!!gnomeFriendName}
-                                    onClose ={()=> setGnomeFriendName('')}
+                                    onClose={() => setGnomeFriendName('')}
                                 >
-                                    <GnomeCard
-                                        gnome={filterByName(allGnomes, gnomeFriendName)[0]}
-                                        setGnomeFriendsView={(gnome) => {
-                                            setGnomeFriendName(gnome)
-                                        }}
-                                    />
+                                    <div className='friend-modal'>
+
+                                        <GnomeCard
+                                            gnome={filterByName(allGnomes, gnomeFriendName)[0]}
+                                            setGnomeFriendsView={(gnome) => {
+                                                setGnomeFriendName(gnome)
+                                            }}
+                                        />
+                                    </div>
                                 </Modal>
                             }
 

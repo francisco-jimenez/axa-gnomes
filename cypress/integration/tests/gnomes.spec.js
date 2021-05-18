@@ -100,4 +100,18 @@ context('Gnomle tests', () => {
         cy.get(".ui.raised.card").should('have.length', 20);
     })
 
+    it('Click on a friend and open modal -> Cogwitz Chillwidget', () => {
+        cy.get(".gnomle-show-friends-button").first().click()
+        cy.wait(1000)
+        cy.get(".ui.raised.card").first().should('contain.text', 'Cogwitz Chillwidget');
+        cy.contains("Cogwitz Chillwidget").click();
+    })
+    
+    it('Click on a friend of a friend -> Malbert Felrocket', () => {
+        cy.get(".friend-modal .gnomle-show-friends-button").first().click()
+        cy.wait(1000)
+        cy.contains("Malbert Felrocket").click()
+    })
+
+
 })
