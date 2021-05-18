@@ -6,7 +6,7 @@ import GnomeCard from "../../components/GnomeCard"
 import Paginator from "../../components/Paginator"
 import SearchModal from "../../components/SearchModal"
 //@ts-ignore
-import Modal, { closeStyle } from 'simple-react-modal'
+import Modal from 'simple-react-modal'
 
 
 export const Home = () => {
@@ -16,12 +16,11 @@ export const Home = () => {
 
 
     const [allGnomes, setAllGnomes] = useState([])
-    const [displayedGnomes, setDisplayedGnomes] = useState([])
     const [filterredGnomes, setFilterredGnomes] = useState([])
+    const [displayedGnomes, setDisplayedGnomes] = useState([])
 
     const [gnomeFriendName, setGnomeFriendName] = useState('')
 
-    // const [showSearchModal, setShowSearchModal] = useState(false)
 
 
     useEffect(() => {
@@ -66,7 +65,6 @@ export const Home = () => {
                             setFilterredGnomes={setFilterredGnomes}
                             loading={loading}
                         />
-                        {gnomeFriendName}
                         <div className='d-flex flex-wrap justify-content-center'>
                             {filterredGnomes && filterredGnomes.length === 0 &&
                                 <div>

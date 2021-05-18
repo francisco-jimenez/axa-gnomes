@@ -1,7 +1,6 @@
-import React, { FunctionComponent, useState } from "react"
+import { FunctionComponent, useState } from "react"
 import { Button, Card } from "semantic-ui-react"
 import { Gnome } from "../models/Gnome";
-import Tooltip from 'react-tooltip-lite';
 
 import Tags from "./Tags";
 interface Props {

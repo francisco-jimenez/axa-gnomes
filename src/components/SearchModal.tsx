@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import InputRange from "react-input-range"
-import { Button, Dropdown, Input, Label } from "semantic-ui-react"
+import { Button, Dropdown, Input } from "semantic-ui-react"
 import { Gnome } from "../models/Gnome"
 import { filterByAge, filterByHairColor, filterByHeight, filterByName, filterByProfession, filterByWeight, getPossibleValues, transformArrayIntoSelectOptions } from "../utils"
 
