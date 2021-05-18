@@ -95,6 +95,7 @@ const SearchModal: FunctionComponent<Props> = (props: Props) => {
 
                     <Input focus
                         placeholder='Name'
+                        className='gnomle-search-input'
                         value={searchText}
                         onChange={(e, d) => { setSearchText(d.value) }}
                     />
@@ -102,6 +103,7 @@ const SearchModal: FunctionComponent<Props> = (props: Props) => {
                 </div>
                 <div className='m-4'>
                     <Dropdown
+                        className='gnomle-profession-selector'
                         placeholder='Profession'
                         search
                         selection
@@ -114,6 +116,7 @@ const SearchModal: FunctionComponent<Props> = (props: Props) => {
                 </div>
                 <div className='m-4'>
                     <Dropdown
+                        className='gnomle-hair-color-selector'
                         placeholder='Hair Color'
                         search
                         selection
@@ -126,7 +129,7 @@ const SearchModal: FunctionComponent<Props> = (props: Props) => {
                 </div>
                 <div className='d-flex justify-content-between'>
                     {minAge && maxAge && selectedAgeRange.min &&
-                        <div className='m-4'>
+                        <div className='m-4 gnomle-age-selector'>
                             <label className='mb-3'>
                                 Age {'(' + selectedAgeRange.min + ' - ' + selectedAgeRange.max + ')'}
                             </label>
@@ -144,7 +147,7 @@ const SearchModal: FunctionComponent<Props> = (props: Props) => {
                         </div>
                     }
                     {minHeight && maxHeight > 0 &&
-                        <div className='m-4'>
+                        <div className='m-4 gnomle-height-selector'>
                             <label className='mb-3'>
                                 Height {'(' + math.round(selectedHeightRange.min, 1) + ' - ' + math.round(selectedHeightRange.max, 1) + ')'}
                             </label>
@@ -163,7 +166,7 @@ const SearchModal: FunctionComponent<Props> = (props: Props) => {
                         </div>
                     }
                     {minWeight && maxWeight > 0 &&
-                        <div className='m-4'>
+                        <div className='m-4 gnomle-weight-selector'>
                             <label className='mb-3'>
                                 Weight {'(' + math.round(selectedWeightRange.min, 1) + ' - ' + math.round(selectedWeightRange.max, 1) + ')'}
                             </label>
@@ -185,13 +188,13 @@ const SearchModal: FunctionComponent<Props> = (props: Props) => {
 
                     <Button
                         type='submit'
-                        className='m-4'
+                        className='m-4 gnomle-search-button'
                         onClick={() => doSearch()}
                         loading={props.loading}
                     >
                         Buscar
                     </Button>
-                    <u onClick={()=> reset()}>
+                    <u className = 'gnomle-reset-button' onClick={() => reset()}>
                         Reset
                     </u>
                 </div>

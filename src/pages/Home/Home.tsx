@@ -56,6 +56,7 @@ export const Home = () => {
                     <>
                         <div className='d-flex justify-content-center align-items-center px-5 mx-5'>
                             <img
+                                className ='logo-gnomle'
                                 src={'/Gnomle.png'}
                                 style={{ height: '100px' }}
                             />

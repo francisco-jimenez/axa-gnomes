@@ -79,7 +79,7 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
                                 ))}
                                 {showFriends &&
                                     <Button
-                                        className='mt-auto'
+                                        className='mt-auto gnomle-hide-friends-button'
                                         basic
                                         size='tiny'
                                         onClick={() => { setShowFriends(false) }}
@@ -89,7 +89,7 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
                                 }
                                 {!showFriends &&
                                     <Button
-                                        className='mt-auto'
+                                        className='mt-auto gnomle-show-friends-button'
                                         basic
                                         size='tiny'
                                         onClick={() => { setShowFriends(true) }}
