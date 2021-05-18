@@ -1,23 +1,12 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# GNOMLE - Your easy and user friendly Gnome finder for Brastlewark life.
 
-Run with NPM or YARN:  
+ Don't get lost in Brastlewark!. With our app, finding the Gnome you are looking for is easier than ever before.
 
-  "scripts": {  
-    "start": "react-scripts start",  
-    "build": "react-scripts build",  
-    "test": "react-scripts test",  
-    "eject": "react-scripts eject"  
-	
-## Deployment + Service start  
+ Look for them by name, hair color, height and many more, you can even have a quick preview of a Gnome's friend.
 
-git pull  
-npm build  
-serve -s build -l 3000  
+##
 
-## AWS Setup (Amazon Linux 2)  
-
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash  
-nvm install node  
-npm install -g serve  
+<div>
+  <img src="/screenshot.png" alt="screenshot" width="100%">
+</div>
