@@ -59,6 +59,8 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
                             {renderSingleItem('Age', age)}
                             {renderSingleItem('Height', math.round(height, 2))}
                             {renderSingleItem('Weight', math.round(weight, 2))}
+
+                            
                         </div>
                         <LazyLoad once height={300}>
                             <img src={thumbnail} alt='gnome-pic' className ='gnome-card-img' />
