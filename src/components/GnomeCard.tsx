@@ -55,7 +55,7 @@ const GnomeCard: FunctionComponent<Props> = (props: Props) => {
                 <Card.Description className ='gnome-card-description'>
                     <div className='d-flex justify-content-between'>
                         <div className='d-flex flex-column justify-content-between'>
-                            {/* {renderSingleItem(FieldTypes.TITLE, 'nameeee')} */}
+                            {/* {renderSingleItem(FieldTypes.TITLE, 'nameeee')} Holaaa */}
                             {renderSingleItem('Age', age)}
                             {renderSingleItem('Height', math.round(height, 2))}
                             {renderSingleItem('Weight', math.round(weight, 2))}
