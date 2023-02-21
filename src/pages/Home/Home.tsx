@@ -94,7 +94,7 @@ export const Home = () => {
               )}
               {gnomeFriendName && (
                 <Modal
-                  // className='friend-modal'
+                  id="friend-modal-container"
                   show={!!gnomeFriendName}
                   onClose={() => setGnomeFriendName("")}
                 >

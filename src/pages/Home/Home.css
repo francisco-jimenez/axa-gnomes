@@ -16,3 +16,7 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+#friend-modal-container > div {
+  background-color: transparent !important;
+}
